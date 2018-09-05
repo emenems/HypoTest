@@ -69,10 +69,11 @@ end
 """
 	theobins(d,b)
 Count theoretical number of occurances in given bins (`b`) for given
-distribution(`d`) using input data (`x`)
+distribution(`d`) using input data (`x`).
 
 **Output**
 * bc: expected number of occurences in each bin. Float to avoid summing issues (`sum(bc)==n`)
+
 **Example**
 d = Distributions.Normal()
 b = collect(-3.:1:3);
