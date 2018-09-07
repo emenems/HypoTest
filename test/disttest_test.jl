@@ -12,7 +12,7 @@ function testhist_test()
 
 	# same as above but without known dist. parameters ()
 	d2 = Distributions.Normal(3.744444,2.200925);
-	out2 = testhist(x,d2,2,alpha=0.10,bin_method=10);
+	out2 = testhist(x,d2,2,alpha=0.01,bin_method=10);
 	@test out2.critical ≈ 15.08627 atol = 0.001
 	@test out2.estim ≈ 19.828286 atol = 0.0001
 	@test out2.alpha == 0.01
@@ -20,7 +20,7 @@ function testhist_test()
 	# "perfect" input data + high confidence
 	d3 = Distributions.Binomial(100,0.1)
 	x = rand(d3,100)+0.0; # must be float
-	out3 = testhist(x,d3,0,alpha=0.001,bin_method="Scott")
+	out3 = testhist(x,d3,0,alpha=0.01,bin_method="Scott")
 	@test out3.estim < out3.critical # do not reject the hypothesis
 end
 

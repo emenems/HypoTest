@@ -31,10 +31,8 @@ d = Distributions.Binomial(100,0.1)
 x = rand(d,100)+0.0; # must be float
 # compute test
 out = testhist(x,d,0,alpha=0.001,bin_method="Scott")
-# should return hypothesis not rejected
-println(out.estim < out.critical ?
-	"Hypothesis \"$(out.H0)\" not rejected (for alpha=$(out.alpha))" :
-    "Hypothesis \"$(out.H0)\" rejected (for alpha=$(out.alpha))!");
+out.estim < out.critical
+
 ```
 """
 function testhist(x::Vector{Float64},distin,unkpar::Int;
