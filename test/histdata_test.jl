@@ -30,6 +30,13 @@ end
 function prepdata_test()
 	@test [1,2,3.] == HypoTest.prepdata([1.,2.,3.])
 	@test [-1.,0.99] == HypoTest.prepdata([NaN,-1.,NaN,0.99,NaN])
+	# two vectors
+	x,y = HypoTest.prepdata([1.,2,NaN],[2.,NaN,9]);
+	@test x == [1.]
+	@test y == [2.];
+	x,y = HypoTest.prepdata([1.,2.,3.],[2.,3.,4.]);
+	@test x == [1.,2.,3.];
+	@test y == [2.,3.,4.];
 end
 
 # Run functions

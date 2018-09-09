@@ -18,7 +18,7 @@ Following steps are carried out (see Measurements and their Uncertainty by I.G. 
 * `x`: observations
 * `distin`: input distribution to be tested agains `x`
 * `unkpar`: number of unknown parameters used to define `dising` (e.g. =2 if only estimated mean and deviation define the normal distribution). Will be used to compute degree of freedom
-* `bin_method`: see `histbins`
+* `bin_method`: is either bin method (e.g. "Scott", see `histbins`), number of bins (e.g. 10), or vector with bin start stop range ([0.1,0.2,0.3,0.4])
 * `alpha`: significance level, a probability threshold below which the null hypothesis will be rejected
 
 **Output**
@@ -39,7 +39,9 @@ function testhist(x::Vector{Float64},distin,unkpar::Int;
 				bin_method="Scott",alpha::Float64=0.05)::TestResult
 	xuse = HypoTest.prepdata(x);
 	n = length(xuse);
-	b = HypoTest.histbins(xuse,method=bin_method);
+	b = typeof(bin_method)==String || typeof(bin_method)==Int ?
+			HypoTest.histbins(xuse,method=bin_method) :
+			bin_method;
 	# initial E (will be modified to E>5)
 	E = HypoTest.theobins(distin,b,n);
 	r = find(x->x.<5.,E);

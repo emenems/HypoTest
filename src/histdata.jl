@@ -1,9 +1,18 @@
 """
-	prepdata(x)
+	prepdata(x[, y])
 Remove NaNs. Will return reduced vector if any NaN in input data
 """
 function prepdata(x::Vector{Float64})::Vector{Float64}
 	return any(isnan.(x)) ? filter(!isnan,x) : copy(x)
+end
+
+function prepdata(x::Vector{Float64},y::Vector{Float64})
+	m = isnan.(x.+y);
+	if any(m)
+		return x[.!m],y[.!m]
+	else
+		return copy(x),copy(y)
+	end
 end
 
 """

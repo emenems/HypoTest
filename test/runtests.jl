@@ -6,7 +6,8 @@ import Distributions
 # List of test files:
 tests = ["momentestim_test.jl",
 		 "histdata_test.jl",
-		 "disttest_test.jl"]
+		 "disttest_test.jl",
+		 "othertest_test.jl"]
 
 # Run all tests in the list
 for i in tests

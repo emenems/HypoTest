@@ -11,3 +11,6 @@ HypoTest
 ### Plot data
 * `histfit`: normed histogram superimposed by fitted distribution
 * [Q-Q plot](https://en.wikipedia.org/wiki/Q–Q_plot)
+
+### Other tests
+* `corrp`: correlation coefficient including p-value 

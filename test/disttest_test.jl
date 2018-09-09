@@ -18,8 +18,9 @@ function testhist_test()
 	@test out2.alpha == 0.01
 
 	# "perfect" input data + high confidence
-	d3 = Distributions.Binomial(100,0.1)
-	x = rand(d3,100)+0.0; # must be float
+	d3 = Distributions.Binomial(1000,0.1)
+	srand(123);
+	x = rand(d3,1000)+0.0; # must be float
 	out3 = testhist(x,d3,0,alpha=0.01,bin_method="Scott")
 	@test out3.estim < out3.critical # do not reject the hypothesis
 end
