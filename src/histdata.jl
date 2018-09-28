@@ -35,8 +35,8 @@ function histfit(x::Vector{Float64},d;bins_method="Rice",pdf_points::Int=100)
 	nb = histbins(x,method=bins_method);
 	PyPlot.figure()
 	PyPlot.plt[:hist](x,nb,normed=true);
-	PyPlot.plot(linspace(nb[1],nb[end],pdf_points),
-		Distributions.pdf.(d,linspace(nb[1],nb[end],pdf_points)),"r-",
+	PyPlot.plot(range(nb[1],stop=nb[end],length=pdf_points),
+		Distributions.pdf.(d,range(nb[1],stop=nb[end],length=pdf_points)),"r-",
 		linewidth=2);
 end
 
@@ -57,14 +57,14 @@ See https://en.wikipedia.org/wiki/Histogram#Number_of_bins_and_width
 b = histbins(rand(100),"Scott");
 ```
 """
-function histbins(datain;method="Scott")::Vector{Float64}
+function histbins(datain;method="Rice")::Vector{Float64}
 	xi = prepdata(datain);
 	data_range = extrema(xi);
 	n = length(xi);
 	if method=="Scott"
-		nb = 3.5*Distributions.std(prepdata(xi))/(n^(1/3));
+		nb = 3.5*Distributions.std(xi)/(n^(1/3));
 	elseif method == "Rice"
-		nb = 2.*n^(1/3);
+		nb = 2.0*n^(1/3);
 	elseif method == "sqrt"
 		nb = sqrt(n);
 	elseif eltype(method) == Int
@@ -72,7 +72,7 @@ function histbins(datain;method="Scott")::Vector{Float64}
 	else # default
 		nb = (data_range[2]-data_range[1])*0.5;
 	end
-	return collect(linspace(data_range[1],data_range[2],trunc(Int,round(nb))+1));
+	return collect(range(data_range[1],stop=data_range[2],length=trunc(Int,round(nb))+1));
 end
 
 """
@@ -112,8 +112,8 @@ bc = HypoTest.countbins(x,[0.,1.,9.,10.]);
 function countbins(x::Vector{Float64},b::Vector{Float64})::Vector{Int}
 	bc = zeros(Int,length(b)-1);
 	for i = 1:length(bc)
-		bc[i] = i<length(bc) ? length(find(y-> y .>= b[i] && y .< b[i+1],x)) :
-						   length(find(y-> y .>= b[i] && y .<= b[i+1],x));
+		bc[i] = i<length(bc) ? length(findall(y-> y .>= b[i] && y .< b[i+1],x)) :
+						   length(findall(y-> y .>= b[i] && y .<= b[i+1],x));
 	end
 	return bc
 end

@@ -7,7 +7,7 @@ function corrp_test()
 	@test p1 ≈ 0.2111 atol = .0001
 
 	x[2] = NaN;
-	y[[2,4]] = NaN;
+	y[[2,4]] .= NaN;
 	r2,p2 = corrp(x,y);
 	@test r2 ≈ 0.2892 atol = .0001
 	@test p2 ≈ 0.2444 atol = .0001

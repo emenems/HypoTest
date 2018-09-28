@@ -15,7 +15,7 @@ r,p = corrp(x,y);
 function corrp(x::Vector{Float64},y::Vector{Float64})
 	xi,yi = HypoTest.prepdata(x,y);
 	n = length(xi);
-	r = cor(xi,yi);
+	r = Statistics.cor(xi,yi);
 	t = HypoTest.tpearval(r,n);
 	return r, HypoTest.pvalcorr(t,n)
 end

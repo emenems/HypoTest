@@ -1,7 +1,8 @@
 # Run the test from HypoTest folder
 using HypoTest
-using Base.Test
+using Test
 import Distributions
+import Random
 
 # List of test files:
 tests = ["momentestim_test.jl",

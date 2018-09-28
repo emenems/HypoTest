@@ -2,6 +2,7 @@ module HypoTest
 
 import Distributions
 import PyPlot
+import Statistics
 
 include("histdata.jl")
 include("momentestim.jl")

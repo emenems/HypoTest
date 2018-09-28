@@ -70,5 +70,5 @@ function stdconfid(x::Vector{Float64};alpha::Float64=0.05,x_mean::Float64=NaN)
 	k = isnan(x_mean) ? length(x_use)-1 : length(x_use);
 	d = Distributions.Chisq(k);
 	qlow,qhigh = Distributions.quantile(d,1-alpha/2),Distributions.quantile(d,alpha/2);
-	return sigma,(sqrt(k*sigma^2/qlow), sqrt(k*sigma^2./qhigh))
+	return sigma,(sqrt(k*sigma^2/qlow), sqrt(k*sigma^2/qhigh))
 end

@@ -28,7 +28,7 @@ Following steps are carried out (see Measurements and their Uncertainty by I.G. 
 ```
 # generate sample
 d = Distributions.Binomial(100,0.1)
-x = rand(d,100)+0.0; # must be float
+x = rand(d,100) .+ 0.0; # must be float
 # compute test
 out = testhist(x,d,0,alpha=0.001,bin_method="Scott")
 out.estim < out.critical
@@ -44,13 +44,13 @@ function testhist(x::Vector{Float64},distin,unkpar::Int;
 			bin_method;
 	# initial E (will be modified to E>5)
 	E = HypoTest.theobins(distin,b,n);
-	r = find(x->x.<5.,E);
+	r = findall(x->x.<5.,E);
 	i = 1; # count iteration to avoid infinite loop
 	while !isempty(r)
 		r[1]+1 < length(b) ? deleteat!(b,r[1]+1) : nothing
 		r[1]+1 == length(b) ? deleteat!(b,length(b)-1) : nothing
 		E = HypoTest.theobins(distin,b,n);
-		r = find(x->x.<5.,E)
+		r = findall(x->x.<5.,E)
 		i += 1;
 		i > n ? break : nothing
 	end
