@@ -14,4 +14,3 @@ tests = ["momentestim_test.jl",
 for i in tests
 	include(i)
 end
-println("Test End!")
