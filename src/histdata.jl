@@ -16,7 +16,7 @@ function prepdata(x::Vector{Float64},y::Vector{Float64})
 end
 
 """
-	histfit(x,d;bins_method="sqrt")
+	histfit(x,d;bins_method="sqrt",pdf_points,new_fig)
 Plot (normed) histogram superimposed by fitted distribution
 
 **Input**
@@ -24,6 +24,7 @@ Plot (normed) histogram superimposed by fitted distribution
 * `d`: distribution (e.g. Distributions.Normal())
 * `bins_method`: method for number of bins (see `?histbins`)
 * `pdf_points`: number of points used to plot PDF
+* `new_fig`: plot to new figure
 
 **Example**
 ```
@@ -31,10 +32,10 @@ d = Distributions.Normal(1,3);
 histfit(Distributions.rand(d,1000),d)
 ```
 """
-function histfit(x::Vector{Float64},d;bins_method="Rice",pdf_points::Int=100)
+function histfit(x::Vector{Float64},d;bins_method="Rice",pdf_points::Int=100,new_fig=true)
 	nb = histbins(x,method=bins_method);
-	PyPlot.figure()
-	PyPlot.plt[:hist](x,nb,normed=true);
+	new_fig ? PyPlot.figure() : nothing
+	PyPlot.plt[:hist](x,nb,density=true);
 	PyPlot.plot(range(nb[1],stop=nb[end],length=pdf_points),
 		Distributions.pdf.(d,range(nb[1],stop=nb[end],length=pdf_points)),"r-",
 		linewidth=2);
